@@ -1,107 +1,147 @@
 # mistral-interview-kit
 
-This repo holds the configuration, prompts and instructions for a 60-minute live vibe-coding interview (likely a FastAPI backend calling an LLM API such as Mistral, with a React + Vite frontend, using uv and pnpm).
+My Claude Code setup for a live vibe-coding interview (likely a FastAPI backend calling the Mistral API, with a React + Vite frontend, using uv and pnpm).
 
-**It contains no solution code:** no starter app, no API wrapper, no Dockerfile and no boilerplate. All application code gets written live, during the session.
+It contains **no solution code**, only instructions for Claude. All application code gets written live, in the interview.
 
-## Structure
+---
 
-```
-.
-├── README.md                 # this file
-├── CLAUDE.md                 # always-on working rules and conventions
-├── CHECKLIST.md              # 4-day prep plan, "must know cold" list, phrases to say aloud
-├── .gitignore                # keeps secrets, venvs, node_modules and archives out of git
-├── .vscode/
-│   └── launch.json           # debugpy config for uvicorn (adjust the module path)
-└── .claude/
-    ├── settings.json         # permissions allowlist only (no hooks, no bypass mode)
-    ├── commands/             # type / in Claude Code to see them all
-    │   ├── start.md          # /start <brief>: save BRIEF.md, write PRD.md, plan M1
-    │   ├── next.md           # /next <instruction>: add to BRIEF.md, update PRD.md, plan and build
-    │   ├── client.md         # /client: async Mistral client (retries, timeouts, logging)
-    │   ├── endpoints.md      # /endpoints: /chat, /chat/stream (SSE), /health, CORS
-    │   ├── structured.md     # /structured <fields>: structured output or tool calls
-    │   ├── ui.md             # /ui: React + Vite UI with streaming and proxy
-    │   ├── tests.md          # /tests: three pytest tests with a mocked LLM
-    │   ├── docker.md         # /docker: Dockerfile and run.sh (only if asked)
-    │   ├── review.md         # /review: explain recent changes, read-only
-    │   ├── debug.md          # /debug <error>: diagnose before fixing
-    │   ├── cleanup.md        # /cleanup: list dead code without editing
-    │   ├── qa.md             # /qa: up to 5 critical, demo-breaking issues
-    │   └── pitch.md          # /pitch: client demo pitch plus likely Q&A
-    └── skills/
-        ├── write-prd/SKILL.md                   # BRIEF.md -> half-page living PRD.md
-        └── fastapi-mistral-conventions/SKILL.md # backend checklist (no code)
+## 1. What this is (one minute)
+
+- **`CLAUDE.md`**: rules Claude reads automatically in every session, such as plan first, take small steps, explain everything, and add nothing I didn't ask for.
+- **Slash commands** (`.claude/commands/`): saved prompts. Typing `/start <brief>` is the same as pasting a long prompt with my brief inside it. Type `/` in Claude Code to see them all.
+- **Skills** (`.claude/skills/`): saved procedures Claude uses when it needs them. `/start` and `/next` use write-prd for me.
+- **`settings.json`**: commands Claude may run without asking me (tests, `git status` and so on). Adding packages, committing, pushing and deleting still ask.
+
+Installing copies these into `~/.claude/`, so they work in **any** folder, including the interviewers' repo. **Nothing ever needs copying into their repo.**
+
+---
+
+## 2. Install once, the day before
+
+Run this from this repo's folder:
+
+```sh
+mkdir -p ~/.claude/commands ~/.claude/skills
+cp .claude/commands/*.md ~/.claude/commands/
+cp -R .claude/skills/* ~/.claude/skills/
 ```
 
-## Install globally (without overwriting your settings)
+**Rules:** if `~/.claude/CLAUDE.md` doesn't exist yet, run `cat CLAUDE.md >> ~/.claude/CLAUDE.md`. If it does exist, open both files and merge them by hand.
 
-Run these from the repo root.
+**Permissions (optional, but fewer prompts):**
+1. Open `~/.claude/settings.json`. It contains my iTerm2 hooks, so **don't overwrite it**.
+2. Add the lines from this repo's `.claude/settings.json` `"allow"` list to its `"allow"` list. Create `"permissions": { "allow": [ ... ] }` if it isn't there.
+3. Check the JSON is valid: `python3 -m json.tool ~/.claude/settings.json > /dev/null && echo OK`
 
-1. Create the folders. This does nothing if they already exist.
-   ```sh
-   mkdir -p ~/.claude/commands ~/.claude/skills
-   ```
+**Check it worked:** open Claude Code in any folder and type `/`. You should see `/start`, `/next`, `/qa` and `/pitch`.
 
-2. Copy the commands and skills.
-   ```sh
-   cp .claude/commands/*.md ~/.claude/commands/
-   cp -R .claude/skills/* ~/.claude/skills/
-   ```
-   If you already have commands or skills with the same names, add `-i` to each `cp` (for example `cp -i ...`). It asks before replacing each file.
+**Check git access works** (so cloning doesn't catch me out on the day):
+```sh
+gh auth status
+```
+It should say "Logged in to github.com". If it doesn't, run `gh auth login`, choose HTTPS and log in through the browser.
 
-3. Add CLAUDE.md to your global rules.
-   - If `~/.claude/CLAUDE.md` doesn't exist yet, append this repo's file:
-     ```sh
-     cat CLAUDE.md >> ~/.claude/CLAUDE.md
-     ```
-   - If it already exists, open both files and merge them by hand, so you don't end up with duplicate or conflicting rules.
+**Updating later:** after changing the kit, run the two `cp` lines again.
 
-4. Merge the permissions into your global settings **by hand**.
-   - Open `~/.claude/settings.json`. It holds your iTerm2 hooks, so leave those as they are.
-   - Add the entries from this repo's `.claude/settings.json` `permissions.allow` list to its `permissions.allow` list. Create the `permissions` block if it isn't there.
-   - Don't copy this repo's file over yours.
-   - Then validate the result:
-     ```sh
-     python3 -m json.tool ~/.claude/settings.json > /dev/null && echo OK
-     ```
+---
 
-5. Set up the debugger in each project. Copy `.vscode/launch.json` into the project, then change `app.main:app` to the starter's module path and app object.
+## 3. Interview day: get a working folder (5-minute setup)
 
-After installing, start Claude Code and run `/status` (to check that the settings loaded) and `/help` (to check that the commands are listed).
+Pick the case that matches what they give me.
 
-Install the kit the day before the interview, not during the 5-minute setup.
+### A) They give a git URL
+```sh
+cd ~/Documents/Projects
+git clone <url>
+cd <repo-name>
+```
+- **A public repo** clones with no keys or login.
+- **A private repo** uses my GitHub login (checked with `gh auth status` the day before). They may need my GitHub username to give me access.
+- **If the URL starts with `git@github.com:`** (SSH) and it fails, swap it for the HTTPS form: `https://github.com/<owner>/<repo>.git`.
 
-## Using this kit with a cloned starter
+### B) They give a zip or a folder of files
+```sh
+cd ~/Documents/Projects
+unzip <file>.zip -d interview
+cd interview
+git init && git add -A && git commit -m "starter"
+```
+Committing their starter first means I can see my changes with `git diff`.
 
-Once the kit is installed globally, it works in any repo, including the one they give you, and nothing of yours goes into their repo.
+### C) They give only a description and keys (no starter)
+```sh
+mkdir -p ~/Documents/Projects/interview && cd ~/Documents/Projects/interview
+git init
+```
+`/start` will notice the folder is empty and propose the scaffold (`uv init` with FastAPI, `pnpm create vite` with React + TypeScript). Approve the dependencies when it asks.
 
-1. Clone their repo with `git clone <their-url>` and `cd` into it.
-2. If their starter has its own `CLAUDE.md`, Claude loads it alongside yours, and their conventions win.
-3. Only if you want the debugger: copy `.vscode/launch.json` from this kit and fix the module path.
-4. `BRIEF.md` and `PRD.md` will live in their repo. To keep them out of git, add them to `.git/info/exclude`, your local ignore list, rather than editing their `.gitignore`.
+### Then, in every case
+1. **Protect the key.** Check `.gitignore` contains `.env`: `grep -n "^\.env" .gitignore`. If it doesn't (or there's no `.gitignore`), add it: `echo ".env" >> .gitignore`.
+2. **Add the key.** Put it in `.env`, for example `MISTRAL_API_KEY=...`. Use whatever variable name the starter expects.
+3. **Install and start the servers myself,** each in its own terminal tab. Use the starter's README if it has one. Typically:
+   - backend: `uv sync`, then `uv run uvicorn <module>:app --reload --port 8000`
+   - frontend: `pnpm install`, then `pnpm dev`
+4. **Start Claude Code:** run `claude` in the project folder, then press **Shift+Tab** for accept-edits mode.
 
-**Fallback** (if you can't install globally, for example on a different machine): copy `CLAUDE.md` and `.claude/` into their repo, then add both to `.git/info/exclude` straight away so you don't commit them.
+(With no starter, skip step 3 until `/start` has created the scaffold.)
 
-## Interview-day checklist
+---
 
-Before you start:
-- [ ] Check the kit is installed: type `/` in Claude Code and confirm `/start`, `/next`, `/qa` and `/pitch` are listed.
-- [ ] Read the "Phrases to say aloud" in `CHECKLIST.md` once.
+## 4. Interview day: the build (40 minutes)
 
-Setup (during their 5-minute intro):
-- [ ] Open the starter and check that its `.gitignore` covers `.env`. Only then paste their API key into `.env`.
-- [ ] Start the backend and frontend in your own terminals. Don't let Claude start them.
-- [ ] Switch Claude Code to accept-edits mode (Shift+Tab). Keep reading every diff.
+You only need four commands:
 
-The build (40 minutes). You only need four commands:
-- [ ] `/start <paste the brief>`: saves `BRIEF.md`, writes `PRD.md` and plans M1. Ask its open questions out loud.
-- [ ] Build M1 (the thinnest end-to-end slice) first. Stub the model call if it's slow to wire up. Use `/client`, `/endpoints`, `/ui` and the other build commands as needed.
-- [ ] Approve each plan once, verify each slice, and narrate what's happening and why.
-- [ ] `/next <paste the instruction>`: for each new instruction they give you.
-- [ ] If an interviewer steers you mid-build, follow them first. Their brief is the real plan.
+| When | Type |
+|---|---|
+| At the start | `/start <paste their brief>` |
+| Each time they give a new instruction | `/next <paste the instruction>` |
+| About 5 minutes before the demo | `/qa` |
+| For the demo and role-play | `/pitch` |
 
-The last 5 minutes:
-- [ ] Run `/qa` and fix only what's critical.
-- [ ] Run `/pitch`, rehearse it once, then demo. Use `PRD.md` to show what was agreed.
+`/start` saves the brief to `BRIEF.md`, writes a short `PRD.md` and lists questions to ask the interviewer out loud. `/next` adds each instruction to both files and builds it.
+
+Between those:
+- **Approve each plan once,** read every diff, and narrate what's happening and why.
+- **Build the thinnest end-to-end slice first.** Stub the model call if it's slow to wire up.
+- **Use the build commands if they help:** `/client`, `/endpoints`, `/structured`, `/ui`, `/tests`, `/docker`.
+- **If something breaks:** `/debug <error>`. To explain a change: `/review`.
+- **If an interviewer steers me,** follow them first. Their brief is the real plan.
+
+---
+
+## 5. Practice run (do this tomorrow)
+
+1. Do steps 2 and 3C above in a new folder.
+2. `/start Build an app where a user pastes text and gets a 3-bullet summary from Mistral.`
+3. Halfway through: `/next Add a button that translates the summary into French.`
+4. Finish with `/qa`, then `/pitch`, and say the pitch out loud.
+
+If that works end to end, I understand the whole kit. `CHECKLIST.md` has the full 4-day plan and the "must know cold" answers.
+
+---
+
+## Reference: every file
+
+| File | Purpose | Installed to |
+|---|---|---|
+| `CLAUDE.md` | Always-on rules and conventions | `~/.claude/CLAUDE.md` |
+| `.claude/commands/start.md` | `/start <brief>`: save the brief, write the PRD, plan M1 | `~/.claude/commands/` |
+| `.claude/commands/next.md` | `/next <instruction>`: update the brief and PRD, plan, build | `~/.claude/commands/` |
+| `.claude/commands/client.md` | `/client`: async Mistral client (timeouts, retries, logging) | `~/.claude/commands/` |
+| `.claude/commands/endpoints.md` | `/endpoints`: `/chat`, `/chat/stream` (SSE), `/health`, CORS | `~/.claude/commands/` |
+| `.claude/commands/structured.md` | `/structured <fields>`: structured output or tool calls | `~/.claude/commands/` |
+| `.claude/commands/ui.md` | `/ui`: React + Vite UI with streaming and a proxy | `~/.claude/commands/` |
+| `.claude/commands/tests.md` | `/tests`: three pytest tests with a mocked LLM | `~/.claude/commands/` |
+| `.claude/commands/docker.md` | `/docker`: Dockerfile and run.sh (only if asked) | `~/.claude/commands/` |
+| `.claude/commands/qa.md` | `/qa`: up to 5 demo-breaking issues | `~/.claude/commands/` |
+| `.claude/commands/pitch.md` | `/pitch`: client pitch plus likely Q&A | `~/.claude/commands/` |
+| `.claude/commands/debug.md` | `/debug <error>`: diagnose before fixing | `~/.claude/commands/` |
+| `.claude/commands/review.md` | `/review`: explain recent changes | `~/.claude/commands/` |
+| `.claude/commands/cleanup.md` | `/cleanup`: list dead code | `~/.claude/commands/` |
+| `.claude/skills/write-prd/` | Turns `BRIEF.md` into a living `PRD.md` | `~/.claude/skills/` |
+| `.claude/skills/fastapi-mistral-conventions/` | Backend checklist Claude follows (no code) | `~/.claude/skills/` |
+| `.claude/settings.json` | Permissions allowlist | Merged by hand into `~/.claude/settings.json` |
+| `.vscode/launch.json` | VS Code debugger config. Optional: copy into the project and fix the module path | Not installed |
+| `.gitignore` | Keeps secrets out of this repo | Not installed |
+| `CHECKLIST.md` | 4-day prep plan, must-know answers, phrases to say aloud | Not installed (for me to read) |
