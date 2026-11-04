@@ -10,19 +10,26 @@ This repo holds the configuration, prompts and instructions for a 60-minute live
 .
 ├── README.md                 # this file
 ├── CLAUDE.md                 # always-on working rules and conventions
-├── PROMPTS.md                # copy-paste prompts to use live, plus phrases to say aloud
-├── CHECKLIST.md              # 4-day prep plan and "must know cold" list
+├── CHECKLIST.md              # 4-day prep plan, "must know cold" list, phrases to say aloud
 ├── .gitignore                # keeps secrets, venvs, node_modules and archives out of git
 ├── .vscode/
 │   └── launch.json           # debugpy config for uvicorn (adjust the module path)
 └── .claude/
     ├── settings.json         # permissions allowlist only (no hooks, no bypass mode)
-    ├── commands/
+    ├── commands/             # type / in Claude Code to see them all
+    │   ├── start.md          # /start <brief>: save BRIEF.md, write PRD.md, plan M1
+    │   ├── next.md           # /next <instruction>: add to BRIEF.md, update PRD.md, plan and build
+    │   ├── client.md         # /client: async Mistral client (retries, timeouts, logging)
+    │   ├── endpoints.md      # /endpoints: /chat, /chat/stream (SSE), /health, CORS
+    │   ├── structured.md     # /structured <fields>: structured output or tool calls
+    │   ├── ui.md             # /ui: React + Vite UI with streaming and proxy
+    │   ├── tests.md          # /tests: three pytest tests with a mocked LLM
+    │   ├── docker.md         # /docker: Dockerfile and run.sh (only if asked)
     │   ├── review.md         # /review: explain recent changes, read-only
     │   ├── debug.md          # /debug <error>: diagnose before fixing
-    │   ├── pitch.md          # /pitch: client demo pitch plus likely Q&A
     │   ├── cleanup.md        # /cleanup: list dead code without editing
-    │   └── qa.md             # /qa: up to 5 critical, demo-breaking issues, checked against running servers
+    │   ├── qa.md             # /qa: up to 5 critical, demo-breaking issues
+    │   └── pitch.md          # /pitch: client demo pitch plus likely Q&A
     └── skills/
         ├── write-prd/SKILL.md                   # BRIEF.md -> half-page living PRD.md
         └── fastapi-mistral-conventions/SKILL.md # backend checklist (no code)
@@ -80,22 +87,20 @@ Once the kit is installed globally, it works in any repo, including the one they
 ## Interview-day checklist
 
 Before you start:
-- [ ] Check the kit is installed: `/qa` and `/pitch` are listed, and write-prd loads.
-- [ ] Have `PROMPTS.md` and `CHECKLIST.md` open on a second screen.
+- [ ] Check the kit is installed: type `/` in Claude Code and confirm `/start`, `/next`, `/qa` and `/pitch` are listed.
+- [ ] Read the "Phrases to say aloud" in `CHECKLIST.md` once.
 
 Setup (during their 5-minute intro):
 - [ ] Open the starter and check that its `.gitignore` covers `.env`. Only then paste their API key into `.env`.
 - [ ] Start the backend and frontend in your own terminals. Don't let Claude start them.
 - [ ] Switch Claude Code to accept-edits mode (Shift+Tab). Keep reading every diff.
-- [ ] Tell Claude: "We're in a live session."
 
-The build (40 minutes):
-- [ ] Paste their brief word for word into `BRIEF.md`, then say: "Read the starter and BRIEF.md, then use write-prd."
-- [ ] Ask the PRD's open questions out loud to the interviewer.
-- [ ] Build M1 (the thinnest end-to-end slice) first. Stub the model call if it's slow to wire up.
+The build (40 minutes). You only need four commands:
+- [ ] `/start <paste the brief>`: saves `BRIEF.md`, writes `PRD.md` and plans M1. Ask its open questions out loud.
+- [ ] Build M1 (the thinnest end-to-end slice) first. Stub the model call if it's slow to wire up. Use `/client`, `/endpoints`, `/ui` and the other build commands as needed.
 - [ ] Approve each plan once, verify each slice, and narrate what's happening and why.
-- [ ] For each new instruction, append it to `BRIEF.md` and say: "Update PRD.md for the new instruction, then build it."
-- [ ] If an interviewer steers you mid-build, follow them first and update `BRIEF.md` afterwards. Their brief is the real plan.
+- [ ] `/next <paste the instruction>`: for each new instruction they give you.
+- [ ] If an interviewer steers you mid-build, follow them first. Their brief is the real plan.
 
 The last 5 minutes:
 - [ ] Run `/qa` and fix only what's critical.

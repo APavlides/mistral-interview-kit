@@ -14,8 +14,8 @@
 ### Day 2: Timed build #1 (40 minutes), then a 30-minute review
 - [ ] Pick a practice brief you haven't seen before.
 - [ ] Rehearse the live workflow from the README: start the servers yourself and switch to accept-edits mode.
-- [ ] Paste the brief into `BRIEF.md`, run write-prd, and ask its open questions out loud.
-- [ ] Build M0 to M3 against the clock, using PROMPTS.md. Halfway through, add a new requirement to `BRIEF.md` and update the PRD.
+- [ ] Run `/start <brief>` and ask the PRD's open questions out loud.
+- [ ] Build M0 to M3 against the clock, using the build commands (`/client`, `/endpoints`, `/ui` and so on). Halfway through, add a new requirement with `/next <instruction>`.
 - [ ] Run `/qa` and fix whatever is critical.
 - [ ] 30-minute review: what was slow, which prompts or rules to tweak, and what you couldn't explain.
 
@@ -37,6 +37,21 @@
 - [ ] **Every line of a Dockerfile:** base image, workdir, copying the dependency files first for caching, installing with uv, copying the source, the non-root user, the exposed port and the CMD.
 - [ ] **What each part of this kit does:**
   - [ ] CLAUDE.md rules: plan first, the live-session mode (approve once, servers run by you), POC slice, diagnose before fixing, and the backend and frontend conventions.
-  - [ ] Commands: `/review`, `/debug`, `/pitch`, `/cleanup`, `/qa`.
+  - [ ] Flow commands: `/start`, `/next`, `/qa`, `/pitch`.
+  - [ ] Build commands: `/client`, `/endpoints`, `/structured`, `/ui`, `/tests`, `/docker`.
+  - [ ] Control commands: `/review`, `/debug`, `/cleanup`.
   - [ ] Skills: write-prd (BRIEF.md to a living PRD.md) and fastapi-mistral-conventions.
   - [ ] `settings.json`: what's allowed, and why `uv add`, `pnpm add`, `git commit`, `git push` and `rm` still prompt.
+
+## Phrases to say aloud
+Read these before the interview, not during it.
+- "First I'll make sure I understand the goal and the user."
+- "I'll build the thinnest end-to-end slice first, then harden it."
+- "I'm stubbing the model call for a minute to prove the UI-to-API path."
+- "I'm asking it to diagnose before it edits, so I stay in control."
+- "I'm only retrying on 429, 5xx and timeouts: other 4xx errors won't succeed on a retry."
+- "Jitter stops many clients from retrying at the same moment."
+- "One shared client in the lifespan reuses connections instead of opening one per request."
+- "I'm using the Vite proxy so there's no CORS in dev and no hardcoded URLs."
+- "That's out of scope for the POC; I'd add it next."
+- "Let me verify that before moving on."
