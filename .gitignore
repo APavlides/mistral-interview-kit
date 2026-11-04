@@ -1,0 +1,16 @@
+# Secrets
+.env
+.env.*
+
+# Python
+.venv/
+__pycache__/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+
+# Archives
+*.zip
