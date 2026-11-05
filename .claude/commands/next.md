@@ -1,11 +1,10 @@
 ---
-description: Add the next instruction, update the PRD, plan and build it
+description: Add the interviewer's new instruction to BRIEF.md and update PRD.md (no building)
 argument-hint: <paste the new instruction>
 ---
 New instruction: $ARGUMENTS
 
+Don't write any application code.
 1. Append it word for word to `BRIEF.md` under a new numbered "Step" heading.
-2. Update only the affected sections of `PRD.md`, and say in one line what changed.
-3. If this step touches the Mistral API or streaming, use the mistral-api or llm-streaming skill.
-4. Propose a short plan (3 to 5 steps), then wait for my OK.
-5. Build it step by step, with a one-line summary per step, and tell me how to verify it.
+2. Update `PRD.md`: add a new milestone for it (with "Done when" and [ ]), or change the affected ones. Edit only what changes.
+3. Tell me in one line what changed, and which milestone `/build` will do next.

@@ -12,12 +12,13 @@ My Claude Code setup for a 40-minute live vibe-coding interview. It contains **n
 | `.claude/settings.json` | **Permissions.** Commands Claude may run without asking. Adding packages, committing, pushing and deleting still ask. |
 | `CHECKLIST.md` | My prep plan and the things to know cold. Not used by Claude. |
 
-The five commands:
+The six commands (each does one job):
 
-| Command | When |
+| Command | Job |
 |---|---|
-| `/start <brief>` | At the start: saves `BRIEF.md`, writes a short `PRD.md`, lists questions to ask, plans the first slice |
-| `/next <instruction>` | Each time they give a new instruction |
+| `/start <brief>` | Brief to `BRIEF.md` and `PRD.md` (with milestones), plus questions to ask. Builds nothing |
+| `/build [M2]` | Plans the next unfinished milestone, waits for my OK, builds it, verifies it, marks it done |
+| `/next <instruction>` | A new instruction from the interviewer: adds it to `BRIEF.md` and `PRD.md`. Builds nothing |
 | `/debug <error>` | When something breaks: diagnoses before changing anything |
 | `/qa` | About 5 minutes before the demo: up to 5 demo-breaking issues |
 | `/pitch` | Before the demo: writes `PITCH.md` (talk track plus likely questions) and `slides.html` (the deck) |
@@ -33,7 +34,9 @@ cp -R .claude/skills/* ~/.claude/skills/
 cat CLAUDE.md >> ~/.claude/CLAUDE.md
 ```
 
-If `~/.claude/CLAUDE.md` already has content, open it afterwards and tidy up any duplicates. **This never touches `~/.claude/settings.json`.**
+If `~/.claude/CLAUDE.md` already has content, open it afterwards and tidy up any duplicates.
+
+**Permissions:** never copy this repo's `.claude/settings.json` over `~/.claude/settings.json`, because that would wipe my iTerm2 hooks. Instead, merge its `"allow"` list into the global file's `"permissions": { "allow": [...] }`, keeping everything else. Back up first, then check with `python3 -m json.tool ~/.claude/settings.json`. (Done on 2026-11-05; the backup is `~/.claude/settings.json.bak`.)
 
 **Up-to-date docs (Context7 MCP server, required):** this gives Claude a tool for looking up current library docs, and the `mistral-api` skill tells it when to use it. It's free, and needs no API key. Install the plugin from inside Claude Code:
 ```
@@ -56,10 +59,14 @@ grep -n "^\.env" .gitignore   # make sure .env is ignored; if not: echo ".env" >
 - Start the backend and frontend in two terminal tabs, using the commands in their README. Typically:
   - backend: `uv sync`, then `uv run uvicorn ...`
   - frontend: `pnpm install`, then `pnpm dev`
-- Start Claude Code with my permissions: `claude --settings ~/Documents/Projects/mistral-interview-kit/.claude/settings.json`
+- Start Claude Code: `claude`. My rules, commands, skills, permissions and Context7 all load automatically.
 - Press **Shift+Tab** for accept-edits mode.
 
-**Build (40 minutes):** `/start <brief>`, then `/next <instruction>` for each step they give you. Approve each plan, read each diff and say out loud what's happening.
+**Build (40 minutes):**
+1. `/start <brief>`. Ask the open questions out loud, then type the answers into the chat.
+2. `/build`. Approve the plan, read each diff and say out loud what's happening. Repeat `/build` for each milestone.
+3. When they give a new instruction: `/next <instruction>`, then `/build`.
+4. Small fixes (including issues `/qa` finds): just ask in plain words, for example "Fix QA issue 1" or "Handle a Mistral timeout with a friendly error in the UI."
 
 **Wrap-up (last 7 minutes of the build):** run `/qa` and fix only what's critical. Then run `/pitch` and `open slides.html`, and press Cmd+Ctrl+F for full screen.
 
