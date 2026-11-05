@@ -2,7 +2,7 @@
 
 ## Day 1: Tools and basics
 - [ ] Check `python3 --version` (3.12+), `uv --version`, `node -v` and `pnpm -v`. Install anything missing with `brew install uv node pnpm`.
-- [ ] Install the kit and Context7 (README), check `gh auth status`, and type `/` in Claude Code to see the six commands.
+- [ ] Install the kit and Context7 (README), check `gh auth status`, and type `/m-` in Claude Code to see the six commands.
 - [ ] In the practice builds, watch for a "Skill" step when Claude writes Mistral or streaming code. If a skill never triggers, tweak its description.
 - [ ] Build the practice starter in a separate folder, and push it to a private GitHub repo.
 - [ ] Read the Mistral docs on chat completions, streaming, JSON output and function calling. Skim embeddings and OCR.
@@ -10,13 +10,13 @@
 
 ## Day 2: Timed build #1 (40 minutes)
 - [ ] Clone a fresh copy of the practice starter, then follow the README "Interview day" section exactly.
-- [ ] Brief: "A user pastes text and gets a 3-bullet summary." Run `/start`, then `/build` for each milestone. Halfway through: `/next Stream the summary as it's generated.`, then `/build`.
-- [ ] Stop building at 33 minutes. Run `/qa`, then `/pitch`, then `open slides.html`. Time how long the deck takes to generate.
+- [ ] Brief: "A user pastes text and gets a 3-bullet summary." Run `/m-start`, then `/m-build` for each milestone. Halfway through: `/m-next Stream the summary as it's generated.`, then `/m-build`.
+- [ ] Stop building at 33 minutes. Run `/m-qa`, then `/m-pitch`, then `open slides.html`. Time how long the deck takes to generate.
 - [ ] Present the slides out loud, switching to the live app on the "Live demo" slide.
 - [ ] Spend 15 minutes on what was slow, and on what you couldn't explain.
 
 ## Day 3: Timed build #2, plus pitch practice
-- [ ] Use a different brief: "Classify support tickets into categories with a reason." Halfway through: `/next Return structured JSON.`, then `/build`.
+- [ ] Use a different brief: "Classify support tickets into categories with a reason." Halfway through: `/m-next Return structured JSON.`, then `/m-build`.
 - [ ] Give the pitch twice, 5 minutes each, and answer the Q&A out loud.
 
 ## Day 4: Full 60-minute mock, then rest

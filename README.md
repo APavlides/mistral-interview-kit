@@ -7,21 +7,21 @@ My Claude Code setup for a 40-minute live vibe-coding interview. It contains **n
 | File | What it is |
 |---|---|
 | `CLAUDE.md` | **Rules.** Claude reads them automatically in every session: plan first, small steps, explain everything, follow the starter. |
-| `.claude/commands/*.md` | **Saved prompts.** Typing `/start <brief>` is the same as pasting a long prompt with my brief inside it. |
-| `.claude/skills/*/SKILL.md` | **Knowledge Claude loads by itself** when the work matches the skill's description. I never call these. `mistral-api` covers using the current SDK correctly; `llm-streaming` covers streaming from FastAPI to React; `pitch-deck` turns the finished app into a client story and an HTML deck (`/pitch` triggers it). |
+| `.claude/commands/*.md` | **Saved prompts.** Typing `/m-start <brief>` is the same as pasting a long prompt with my brief inside it. |
+| `.claude/skills/*/SKILL.md` | **Knowledge Claude loads by itself** when the work matches the skill's description. I never call these. `mistral-api` covers using the current SDK correctly; `llm-streaming` covers streaming from FastAPI to React; `pitch-deck` turns the finished app into a client story and an HTML deck (`/m-pitch` triggers it). |
 | `.claude/settings.json` | **Permissions.** Commands Claude may run without asking. Adding packages, committing, pushing and deleting still ask. |
 | `CHECKLIST.md` | My prep plan and the things to know cold. Not used by Claude. |
 
-The six commands (each does one job):
+The six commands (each does one job). They all start with `m-`, so typing `/m-` lists only mine:
 
 | Command | Job |
 |---|---|
-| `/start <brief>` | Brief to `BRIEF.md` and `PRD.md` (with milestones), plus questions to ask. Builds nothing |
-| `/build [M2]` | Plans the next unfinished milestone, waits for my OK, builds it, verifies it, marks it done |
-| `/next <instruction>` | A new instruction from the interviewer: adds it to `BRIEF.md` and `PRD.md`. Builds nothing |
-| `/debug <error>` | When something breaks: diagnoses before changing anything |
-| `/qa` | About 5 minutes before the demo: up to 5 demo-breaking issues |
-| `/pitch` | Before the demo: writes `PITCH.md` (talk track plus likely questions) and `slides.html` (the deck) |
+| `/m-start <brief>` | Brief to `BRIEF.md` and `PRD.md` (with milestones), plus questions to ask. Builds nothing |
+| `/m-build [M2]` | Plans the next unfinished milestone, waits for my OK, builds it, verifies it, marks it done |
+| `/m-next <instruction>` | A new instruction from the interviewer: adds it to `BRIEF.md` and `PRD.md`. Builds nothing |
+| `/m-debug <error>` | When something breaks: diagnoses before changing anything |
+| `/m-qa` | About 5 minutes before the demo: up to 5 demo-breaking issues |
+| `/m-pitch` | Before the demo: writes `PITCH.md` (talk track plus likely questions) and `slides.html` (the deck) |
 
 ## Install once
 
@@ -63,12 +63,12 @@ grep -n "^\.env" .gitignore   # make sure .env is ignored; if not: echo ".env" >
 - Press **Shift+Tab** for accept-edits mode.
 
 **Build (40 minutes):**
-1. `/start <brief>`. Ask the open questions out loud, then type the answers into the chat.
-2. `/build`. Approve the plan, read each diff and say out loud what's happening. Repeat `/build` for each milestone.
-3. When they give a new instruction: `/next <instruction>`, then `/build`.
-4. Small fixes (including issues `/qa` finds): just ask in plain words, for example "Fix QA issue 1" or "Handle a Mistral timeout with a friendly error in the UI."
+1. `/m-start <brief>`. Ask the open questions out loud, then type the answers into the chat.
+2. `/m-build`. Approve the plan, read each diff and say out loud what's happening. Repeat `/m-build` for each milestone.
+3. When they give a new instruction: `/m-next <instruction>`, then `/m-build`.
+4. Small fixes (including issues `/m-qa` finds): just ask in plain words, for example "Fix QA issue 1" or "Handle a Mistral timeout with a friendly error in the UI."
 
-**Wrap-up (last 7 minutes of the build):** run `/qa` and fix only what's critical. Then run `/pitch` and `open slides.html`, and press Cmd+Ctrl+F for full screen.
+**Wrap-up (last 7 minutes of the build):** run `/m-qa` and fix only what's critical. Then run `/m-pitch` and `open slides.html`, and press Cmd+Ctrl+F for full screen.
 
 **Demo (10 minutes):** present the slides, and switch to the live app on the "Live demo" slide.
 
