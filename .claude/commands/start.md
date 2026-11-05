@@ -1,12 +1,17 @@
 ---
-description: Start the live session - save the brief, write the PRD, plan M1
+description: Start the build - save the brief, write a short PRD, plan the first slice
 argument-hint: <paste the brief>
 ---
 Brief: $ARGUMENTS
 
-We're in a live session (see CLAUDE.md).
-1. Save the brief word for word to `BRIEF.md` at the repo root. If no brief was given, look for one in the starter (such as its README) or ask me.
-2. Read the starter: its structure, stack and how to run it. Tell me in 3 lines. If the folder is empty (no starter), propose a minimal M0 scaffold instead (backend with `uv init` and FastAPI, frontend with `pnpm create vite` using React + TypeScript), listing the dependencies it needs.
-3. Use the write-prd skill to create `PRD.md`.
-4. Show me the PRD's open questions so I can ask them out loud.
-5. Propose a short plan for M1 (the thinnest end-to-end slice), then wait for my OK.
+1. Save the brief word for word to `BRIEF.md`.
+2. Read the starter (its README, structure and how it runs). Summarise it in 3 lines.
+3. Write a half-page `PRD.md` with these sections:
+   - **Goal**: one sentence.
+   - **User**: one line.
+   - **Core flow**: numbered steps.
+   - **Out of scope**: what we're not building.
+   - **Endpoints and data**: in memory.
+   - **Milestones**: M1 is the thinnest end-to-end slice, M2 the core feature, M3 hardening.
+   - **Open questions**: up to 3, each with my recommended default.
+4. Show me the open questions so I can ask them out loud, then propose the plan for M1 and wait for my OK. When building, use the mistral-api and llm-streaming skills where relevant.

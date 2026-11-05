@@ -1,5 +1,5 @@
 ---
-description: Find up to 5 critical, demo-breaking issues (verified by running the app)
+description: Find up to 5 critical, demo-breaking issues (checked against the running servers)
 argument-hint: [main flow or endpoint to exercise]
 ---
 Main flow to check: $ARGUMENTS (if empty, infer it from the code).
