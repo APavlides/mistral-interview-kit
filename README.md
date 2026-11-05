@@ -12,10 +12,11 @@ My Claude Code setup for a 40-minute live vibe-coding interview. It contains **n
 | `.claude/settings.json` | **Permissions.** Commands Claude may run without asking. Adding packages, committing, pushing and deleting still ask. |
 | `CHECKLIST.md` | My prep plan and the things to know cold. Not used by Claude. |
 
-The six commands (each does one job). They all start with `my-`, so typing `/my-` lists only mine:
+The seven commands (each does one job). They all start with `my-`, so typing `/my-` lists only mine:
 
 | Command | Job |
 |---|---|
+| `/my-explain [area]` | Right after cloning: explains the codebase in about 2 minutes of reading. Changes nothing |
 | `/my-start <brief>` | Brief to `docs/BRIEF.md` and `docs/PRD.md` (with milestones), plus questions to ask. Builds nothing |
 | `/my-build [M2]` | Plans the next unfinished milestone, waits for my OK, builds it, verifies it, marks it done |
 | `/my-next <instruction>` | A new instruction from the interviewer: adds it to `docs/BRIEF.md` and `docs/PRD.md`. Builds nothing |
@@ -68,6 +69,7 @@ grep -n "^\.env" .gitignore   # make sure .env is ignored; if not: echo ".env" >
 - Press **Shift+Tab** for accept-edits mode.
 
 **Build (40 minutes):**
+1. `/my-explain`, and read the summary out loud. If the app is almost complete, skip `/my-start` and `/my-build`: fix things one at a time in plain words, with `/my-debug` and `/my-qa`.
 1. `/my-start <brief>`. Ask the open questions out loud, then type the answers into the chat.
 2. `/my-build`. Approve the plan, read each diff and say out loud what's happening. Repeat `/my-build` for each milestone.
 3. When they give a new instruction: `/my-next <instruction>`, then `/my-build`.
