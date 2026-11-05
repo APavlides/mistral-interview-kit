@@ -16,12 +16,12 @@ The six commands (each does one job). They all start with `my-`, so typing `/my-
 
 | Command | Job |
 |---|---|
-| `/my-start <brief>` | Brief to `BRIEF.md` and `PRD.md` (with milestones), plus questions to ask. Builds nothing |
+| `/my-start <brief>` | Brief to `docs/BRIEF.md` and `docs/PRD.md` (with milestones), plus questions to ask. Builds nothing |
 | `/my-build [M2]` | Plans the next unfinished milestone, waits for my OK, builds it, verifies it, marks it done |
-| `/my-next <instruction>` | A new instruction from the interviewer: adds it to `BRIEF.md` and `PRD.md`. Builds nothing |
+| `/my-next <instruction>` | A new instruction from the interviewer: adds it to `docs/BRIEF.md` and `docs/PRD.md`. Builds nothing |
 | `/my-debug <error>` | When something breaks: diagnoses before changing anything |
 | `/my-qa` | About 5 minutes before the demo: up to 5 demo-breaking issues |
-| `/my-pitch` | Before the demo: writes `PITCH.md` (talk track plus likely questions) and `slides.html` (the deck) |
+| `/my-pitch` | Before the demo: writes `docs/PITCH.md` (talk track plus likely questions) and `docs/slides.html` (the deck) |
 
 ## Install once
 
@@ -73,7 +73,7 @@ grep -n "^\.env" .gitignore   # make sure .env is ignored; if not: echo ".env" >
 3. When they give a new instruction: `/my-next <instruction>`, then `/my-build`.
 4. Small fixes (including issues `/my-qa` finds): just ask in plain words, for example "Fix QA issue 1" or "Handle a Mistral timeout with a friendly error in the UI."
 
-**Wrap-up (last 7 minutes of the build):** run `/my-qa` and fix only what's critical. Then run `/my-pitch` and `open slides.html`, and press Cmd+Ctrl+F for full screen.
+**Wrap-up (last 7 minutes of the build):** run `/my-qa` and fix only what's critical. Then run `/my-pitch` and `open docs/slides.html`, and press Cmd+Ctrl+F for full screen.
 
 **Demo (10 minutes):** present the slides, and switch to the live app on the "Live demo" slide.
 

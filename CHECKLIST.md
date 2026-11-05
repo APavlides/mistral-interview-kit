@@ -11,7 +11,7 @@
 ## Day 2: Timed build #1 (40 minutes)
 - [ ] Clone a fresh copy of the practice starter, then follow the README "Interview day" section exactly.
 - [ ] Brief: "A user pastes text and gets a 3-bullet summary." Run `/my-start`, then `/my-build` for each milestone. Halfway through: `/my-next Stream the summary as it's generated.`, then `/my-build`.
-- [ ] Stop building at 33 minutes. Run `/my-qa`, then `/my-pitch`, then `open slides.html`. Time how long the deck takes to generate.
+- [ ] Stop building at 33 minutes. Run `/my-qa`, then `/my-pitch`, then `open docs/slides.html`. Time how long the deck takes to generate.
 - [ ] Present the slides out loud, switching to the live app on the "Live demo" slide.
 - [ ] Spend 15 minutes on what was slow, and on what you couldn't explain.
 
