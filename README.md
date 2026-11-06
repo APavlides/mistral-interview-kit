@@ -37,10 +37,13 @@ cat CLAUDE.md >> ~/.claude/CLAUDE.md
 
 If `~/.claude/CLAUDE.md` already has content, open it afterwards and tidy up any duplicates.
 
-**After changing the kit:** copy again only what changed, then open a new `claude` session.
-- Commands: `cp .claude/commands/my-*.md ~/.claude/commands/`. If you renamed or removed one, also delete its old file from `~/.claude/commands/`, or it stays in the menu.
-- Skills: `cp -R .claude/skills/* ~/.claude/skills/`
-- CLAUDE.md: edit `~/.claude/CLAUDE.md` by hand. Don't run the `cat ... >>` line again, because it would add the rules a second time.
+**After changing the kit:** run `./sync.sh` from this folder, then open a new `claude` session. The script:
+- copies `CLAUDE.md` over `~/.claude/CLAUDE.md`, after saving the old one as `~/.claude/CLAUDE.md.bak`
+- copies the commands, and removes any `my-` command that no longer exists here
+- copies the skills
+- never touches `~/.claude/settings.json`
+
+The kit's `CLAUDE.md` is the master copy. Make rule changes here, not in `~/.claude/CLAUDE.md`, or the next sync will overwrite them.
 
 **Permissions:** never copy this repo's `.claude/settings.json` over `~/.claude/settings.json`, because that would wipe my iTerm2 hooks. Instead, merge its `"allow"` list into the global file's `"permissions": { "allow": [...] }`, keeping everything else. Back up first, then check with `python3 -m json.tool ~/.claude/settings.json`. (Done on 2026-11-05; the backup is `~/.claude/settings.json.bak`.)
 
