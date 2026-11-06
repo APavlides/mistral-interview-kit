@@ -12,7 +12,7 @@ My Claude Code setup for a 40-minute live vibe-coding interview. It contains **n
 | `.claude/settings.json` | **Permissions.** Commands Claude may run without asking. Adding packages, committing, pushing and deleting still ask. |
 | `CHECKLIST.md` | My prep plan and the things to know cold. Not used by Claude. |
 
-The seven commands (each does one job). They all start with `my-`, so typing `/my-` lists only mine:
+The eight commands (each does one job). They all start with `my-`, so typing `/my-` lists only mine:
 
 | Command | Job |
 |---|---|
@@ -20,6 +20,7 @@ The seven commands (each does one job). They all start with `my-`, so typing `/m
 | `/my-start <brief>` | Brief to `docs/BRIEF.md` and `docs/PRD.md` (with milestones), plus questions to ask. Builds nothing |
 | `/my-build [M2]` | Plans the next unfinished milestone, waits for my OK, builds it, verifies it, marks it done |
 | `/my-next <instruction>` | A new instruction from the interviewer: adds it to `docs/BRIEF.md` and `docs/PRD.md`. Builds nothing |
+| `/my-test <name>` | When they ask for a test: proposes 3 to 5 cases, writes them with a fake Mistral client, runs them |
 | `/my-debug <error>` | When something breaks: diagnoses before changing anything |
 | `/my-qa` | About 5 minutes before the demo: up to 5 demo-breaking issues |
 | `/my-pitch` | Before the demo: writes `docs/PITCH.md` (talk track plus likely questions) and `docs/slides.html` (the deck) |
