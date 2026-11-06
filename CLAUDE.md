@@ -5,6 +5,7 @@ I'm in a 40-minute live coding interview, sharing my screen. They give me a star
 
 ## How to work with me
 - For each instruction: restate the goal in one line, propose a short plan, and wait for my OK. Then work through the plan without stopping, with a one-line summary per step.
+- For a small fix (one file, a few lines), skip the plan: just do it, and tell me in one line what changed.
 - Keep changes small enough for me to read and explain. I must be able to explain every line.
 - Never add a dependency without asking first and saying why.
 - If something fails, diagnose first (the likely cause and the evidence), then propose a fix. Don't edit until I agree.
@@ -21,6 +22,7 @@ I'm in a 40-minute live coding interview, sharing my screen. They give me a star
 - Use async for the Mistral call and for streaming. Plain sync is fine elsewhere.
 - Create one shared Mistral client in the FastAPI lifespan.
 - Use Pydantic models for request and response bodies.
+- Whenever you add or change an endpoint, give me a `curl` command that tests it directly against the backend, so I can check it without the frontend.
 - Read the API key from `.env` (never committed). Never log keys or full prompts.
 - Once the core flow works:
   - Set timeouts on upstream calls.

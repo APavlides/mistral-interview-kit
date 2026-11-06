@@ -29,6 +29,7 @@ CLAUDE.md and the starter take precedence. This skill is knowledge only: still p
 - **Streaming:** the SDK streams as server-sent events. Each event carries a delta, which may be empty. Skip empty deltas. For forwarding the stream to the browser, see the llm-streaming skill.
 - **Structured output:** Mistral recommends custom structured output (a schema, such as one from a Pydantic model) over plain JSON mode. If you use JSON mode, the prompt itself must explicitly ask for JSON. Always validate the result with Pydantic before returning it.
 - **Function calling:** the model returns tool calls. Our code runs the tool, sends the result back with the matching tool-call ID, and calls the model again for the final answer.
+- **Agents:** Mistral also has an Agents and Conversations API, with built-in tools (such as web search and code execution) and server-side conversation state. Look it up with Context7 before using it, because it's newer and changes often.
 - **Embeddings:** an embeddings endpoint with an embedding model (such as `mistral-embed`) and a list of inputs. For small demos, keep the vectors in memory and use cosine similarity. No vector database unless asked.
 - **OCR / documents:** there's an OCR endpoint for PDFs and images. Look up its input format before using it.
 

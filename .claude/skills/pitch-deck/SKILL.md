@@ -5,7 +5,7 @@ description: Turn a finished app into a client pitch, written as a talk track (d
 
 # Pitch deck
 
-CLAUDE.md takes precedence. Inputs: `docs/BRIEF.md`, `docs/PRD.md` and the code. Aim to finish in about 2 minutes.
+CLAUDE.md takes precedence. Inputs: `docs/BRIEF.md`, `docs/PRD.md` and the code. If `docs/` is missing, use the code and what we did in this session. Aim to finish in about 2 minutes.
 
 ## 1. The story (the same order for the talk and the slides)
 1. **Their problem.** Describe it in the client's words, with the cost of doing nothing (time, money, risk).

@@ -9,3 +9,4 @@ Milestone: $ARGUMENTS (if empty, the first unfinished milestone in `docs/PRD.md`
 3. Build it step by step, with a one-line summary per step.
 4. Check the milestone's "Done when" against the running servers, and tell me exactly how to see it working.
 5. Mark the milestone [x] in `docs/PRD.md`.
+6. Give me two sentences I can say out loud: what this milestone added, and why.
