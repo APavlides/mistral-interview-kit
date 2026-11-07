@@ -68,6 +68,7 @@ Example of the shape (for a ticket triage app):
 - "What I built" always has the diagram, on the right of the bullets.
 - One self-contained file. No build step, no framework, and inline CSS.
 - Load only Mermaid, from a CDN with a pinned, exact version. Under the diagram, add a plain-text version of the flow in case it doesn't render.
+- Hide inactive slides with `visibility: hidden` and absolute positioning, not `display: none`, because Mermaid can't draw diagrams inside a `display: none` element.
 - Each slide fills the 16:9 viewport, one at a time. Arrow keys and the space bar move between slides. Show a slide counter.
 - Style for screen sharing: large text (headlines about 48px or more, bullets about 28px or more), high contrast, a light neutral background and one accent colour.
 
