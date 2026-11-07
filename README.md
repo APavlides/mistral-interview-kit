@@ -23,7 +23,7 @@ The eight commands (each does one job). They all start with `my-`, so typing `/m
 | `/my-test <name>` | When they ask for a test: proposes 3 to 5 cases, writes them with a fake Mistral client, runs them |
 | `/my-debug <error>` | When something breaks: diagnoses before changing anything |
 | `/my-qa` | About 5 minutes before the demo: up to 5 demo-breaking issues |
-| `/my-pitch` | Before the demo: writes `docs/PITCH.md` (talk track plus likely questions) and `docs/slides.html` (the deck) |
+| `/my-pitch` | Before the demo: writes `docs/PITCH.md` (a 2-minute read: what to say, a demo script with example input, likely questions) and `docs/slides.html` (5 slides) |
 
 ## Install once
 
@@ -81,6 +81,6 @@ grep -n "^\.env" .gitignore   # make sure .env is ignored; if not: echo ".env" >
 
 **Wrap-up (last 7 minutes of the build):** run `/my-qa` and fix only what's critical. Then run `/my-pitch` and `open docs/slides.html`, and press Cmd+Ctrl+F for full screen.
 
-**Demo (10 minutes):** present the slides, and switch to the live app on the "Live demo" slide.
+**Demo and role-play (10 minutes):** about 5 minutes presenting the slides (switch to the live app on the "What I built" slide), then about 5 minutes of client questions.
 
 **If they give a zip instead of a URL:** unzip it, `cd` into it, run `git init && git add -A && git commit -m starter`, then carry on as above.
