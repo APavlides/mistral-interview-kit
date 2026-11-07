@@ -10,8 +10,10 @@ CLAUDE.md takes precedence. Inputs: `docs/BRIEF.md`, `docs/PRD.md` and the code.
 ## 1. The five slides (the talk follows the same order, about 5 minutes in all)
 Rough timing: problem 30s, solution 30s, what I built and the demo 2.5 min, next steps 1 min, thank you 15s.
 
-1. **The problem.** The app's name as a small label, then the client's pain as the headline, plus the cost of doing nothing (time, money, risk).
-2. **The solution.** One sentence: "A tool that [does X] so [user] can [outcome]", plus up to 3 benefits in business terms (faster, cheaper, more consistent).
+Every app uses the same five sections, and every slide shows its section label (in bold below) at the top, exactly as written.
+
+1. **The problem.** The client's pain as the headline, plus the cost of doing nothing (time, money, risk).
+2. **Our solution.** One sentence: "A tool that [does X] so [user] can [outcome]", plus up to 3 benefits in business terms (faster, cheaper, more consistent).
 3. **What I built.** The cue to switch to the live demo. Up to 3 bullets on what works today, plus a diagram of at most 5 boxes (for example User → App → API → Mistral → back).
 4. **Next steps.** One honest limitation, then what production would take (for example data, security, evaluation, cost controls), and the ask: a 2 to 4 week pilot.
 5. **Thank you.** "Thank you", the one-sentence value line again, and "Questions?".
@@ -59,6 +61,11 @@ Example of the shape (for a ticket triage app):
 
 ## 4. docs/slides.html
 - Exactly 5 slides. A headline plus at most 3 short bullets each. No paragraphs, no code.
+- Every slide has the same layout:
+  - **Top:** the section label in the accent colour, uppercase, about 24px (for example "THE PROBLEM").
+  - **Middle:** the headline and the bullets.
+  - **Bottom:** the app name on the left, and a progress strip on the right (Problem · Solution · What I built · Next steps), with the current section highlighted.
+- "What I built" always has the diagram, on the right of the bullets.
 - One self-contained file. No build step, no framework, and inline CSS.
 - Load only Mermaid, from a CDN with a pinned, exact version. Under the diagram, add a plain-text version of the flow in case it doesn't render.
 - Each slide fills the 16:9 viewport, one at a time. Arrow keys and the space bar move between slides. Show a slide counter.
